@@ -1,8 +1,10 @@
+import asyncio
 import math
 import random
 import sys
 import webbrowser
 import pygame 
+import asyncio
 
 WIDTH, HEIGHT = 1280, 720  # Зменшено для зручності екранів (можна повернути 2000, 1200)
 BACKGROUND_COLOR = (0, 0, 0)
@@ -143,7 +145,7 @@ def draw_popup(screen, font_title, font_body, font_btn, btn_rect, is_hovered):
     screen.blit(btn_text, btn_text.get_rect(center=btn_rect.center))
 
 
-def main():
+async def main():
     pygame.init()
     pygame.mixer.init()
 
@@ -271,13 +273,15 @@ def main():
 
         pygame.display.flip()     
         clock.tick(FPS)
+
+        await asyncio.sleep(0)  # Дозволяє обробляти інші події, якщо потрібно
     
     pygame.quit()
     sys.exit()
 
 if __name__ == "__main__":
     try:
-        main()
+        asyncio.run(main())
     except Exception as e:
         print("OCURRIO UN ERROR:", e)
         import traceback
